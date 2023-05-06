@@ -9,6 +9,8 @@ from homeassistant.helpers.typing import ConfigType
 
 from .scenario import Scenario
 
+CONF_SCENARIO = "scenario"
+CONF_API_URL = "api_url"
 DOMAIN = "scenario_home"
 CONFIG_SCHEMA = vol.Schema(
     {
@@ -16,6 +18,9 @@ CONFIG_SCHEMA = vol.Schema(
             {
                 vol.Required(CONF_HOST, default="local-scenario-connector"): cv.string,
                 vol.Required(CONF_PORT, default=25333): cv.positive_int,
+                vol.Required(
+                    CONF_API_URL, default="http://supervisor/core/api/"
+                ): cv.string,
             }
         )
     },
@@ -24,24 +29,31 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 def setup(hass: HomeAssistant, config: ConfigType) -> bool:
+    """Set up the scenario components from configuration.yaml."""
     data = config[DOMAIN]
 
     hass.helpers.discovery.load_platform(
         "light",
         DOMAIN,
-        {"scenario": Scenario(data[CONF_HOST], data[CONF_PORT])},
+        {
+            CONF_SCENARIO: Scenario(data[CONF_HOST], data[CONF_PORT]),
+            "api_url": data[CONF_API_URL],
+        },
         config,
     )
     hass.helpers.discovery.load_platform(
         "cover",
         DOMAIN,
-        {"scenario": Scenario(data[CONF_HOST], data[CONF_PORT])},
+        {
+            CONF_SCENARIO: Scenario(data[CONF_HOST], data[CONF_PORT]),
+            "api_url": data[CONF_API_URL],
+        },
         config,
     )
     hass.helpers.discovery.load_platform(
         "climate",
         DOMAIN,
-        {"scenario": Scenario(data[CONF_HOST], data[CONF_PORT])},
+        {CONF_SCENARIO: Scenario(data[CONF_HOST], data[CONF_PORT])},
         config,
     )
 

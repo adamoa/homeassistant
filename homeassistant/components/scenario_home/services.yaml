@@ -1,0 +1,7 @@
+toggle_led:
+  name: Toggle LED
+  description: "Toggle LED on air conditioner."
+  target:
+    entity:
+      integration: scenario_home
+      domain: climate
