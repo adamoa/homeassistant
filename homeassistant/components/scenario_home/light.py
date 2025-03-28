@@ -6,7 +6,7 @@ from typing import Any
 
 from homeassistant.components.light import ATTR_BRIGHTNESS, ColorMode, LightEntity
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import RequiredParameterMissing
+from homeassistant.exceptions import ConfigEntryError
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
@@ -29,7 +29,7 @@ def setup_platform(
     # Assign configuration variables.
     # The configuration check takes care they are present.
     if discovery_info is None:
-        raise RequiredParameterMissing(["Unable to set up without discovery_info."])
+        raise ConfigEntryError(["Unable to set up without discovery_info."])
 
     scenario = discovery_info[CONF_SCENARIO]
 

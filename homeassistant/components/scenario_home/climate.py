@@ -13,7 +13,7 @@ from homeassistant.components.climate import (
 )
 from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import RequiredParameterMissing
+from homeassistant.exceptions import ConfigEntryError
 from homeassistant.helpers.entity_platform import (
     AddEntitiesCallback,
     async_get_current_platform,
@@ -37,7 +37,7 @@ async def async_setup_platform(
     # Assign configuration variables.
     # The configuration check takes care they are present.
     if discovery_info is None:
-        raise RequiredParameterMissing(["Unable to set up without discovery_info."])
+        raise ConfigEntryError(["Unable to set up without discovery_info."])
 
     scenario = discovery_info[CONF_SCENARIO]
 
