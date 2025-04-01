@@ -122,7 +122,8 @@ class ScenarioAirConditioner(Device, ClimateEntity):
     @property
     def supported_features(self) -> ClimateEntityFeature:
         """Return the list of supported features."""
-        return ClimateEntityFeature.FAN_MODE | ClimateEntityFeature.TARGET_TEMPERATURE
+        return ClimateEntityFeature.FAN_MODE | ClimateEntityFeature.TARGET_TEMPERATURE \
+            | ClimateEntityFeature.TURN_OFF | ClimateEntityFeature.TURN_ON
 
     def _get_air_conditioner(self):
         return self.get_frontend().getIRDevice(self._code)
@@ -175,6 +176,12 @@ class ScenarioAirConditioner(Device, ClimateEntity):
         """Turn the entity off."""
         remote_ac = self._get_air_conditioner()
         remote_ac.turnOff()
+        remote_ac.sendCommand()
+
+    def turn_on(self) -> None:
+        """Turn the entity off."""
+        remote_ac = self._get_air_conditioner()
+        remote_ac.turnOn()
         remote_ac.sendCommand()
 
     def update(self):
