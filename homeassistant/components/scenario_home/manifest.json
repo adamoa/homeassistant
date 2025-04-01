@@ -1,5 +1,6 @@
 {
   "domain": "scenario_home",
+  "version": "1.0.1",
   "name": "Scenario Home integration.",
   "codeowners": [],
   "config_flow": true,

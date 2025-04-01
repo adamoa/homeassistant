@@ -171,6 +171,12 @@ class ScenarioAirConditioner(Device, ClimateEntity):
         """Turn auxiliary heater off."""
         raise NotImplementedError()
 
+    def turn_off(self) -> None:
+        """Turn the entity off."""
+        remote_ac = self._get_air_conditioner()
+        remote_ac.turnOff()
+        remote_ac.sendCommand()
+
     def update(self):
         """Update function for polling status."""
         remote_ac = self._get_air_conditioner()
