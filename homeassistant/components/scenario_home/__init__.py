@@ -6,6 +6,7 @@ from homeassistant.const import CONF_HOST, CONF_PORT
 from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.typing import ConfigType
+from homeassistant.helpers.discovery import load_platform
 
 from .scenario import Scenario
 
@@ -32,7 +33,8 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up the scenario components from configuration.yaml."""
     data = config[DOMAIN]
 
-    hass.helpers.discovery.load_platform(
+    load_platform(
+        hass,
         "light",
         DOMAIN,
         {
@@ -41,7 +43,8 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
         },
         config,
     )
-    hass.helpers.discovery.load_platform(
+    load_platform(
+        hass,
         "cover",
         DOMAIN,
         {
@@ -50,7 +53,8 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
         },
         config,
     )
-    hass.helpers.discovery.load_platform(
+    load_platform(
+        hass,
         "climate",
         DOMAIN,
         {CONF_SCENARIO: Scenario(data[CONF_HOST], data[CONF_PORT])},
